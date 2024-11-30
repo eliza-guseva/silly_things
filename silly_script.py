@@ -96,10 +96,13 @@ if st.session_state.authenticated:
     # Input for spending money
     spent = st.number_input("Enter amount spent:", min_value=0.0, value=0.0, step=0.1)
 
-    # Date input
+    # Date input with corrected validation
+    today_for_input = min(today, last_day)  # Use the last day of month if today is beyond selected month
+    default_date = max(first_day, min(today_for_input, last_day))  # Ensure default date is within valid range
+    
     expense_date = st.date_input(
         "Date:",
-        value=today,
+        value=default_date,
         min_value=first_day,
         max_value=last_day
     )
