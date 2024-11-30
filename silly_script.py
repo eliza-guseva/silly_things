@@ -124,4 +124,24 @@ if st.session_state.authenticated:
     else:
         st.info("No spending data available yet.")
 
+def load_spent_money(selected_month):
+    # Example implementation: Load data from a CSV file
+    file_name = f"{selected_month.strftime('%B').lower()}_{selected_month.year}.csv"
+    if os.path.exists(file_name):
+        return pd.read_csv(file_name)
+    else:
+        return pd.DataFrame(columns=['date', 'amount'])
+
+def save_expense(amount, date):
+    # Example implementation: Save data to a CSV file
+    file_name = f"{date.strftime('%B').lower()}_{date.year}.csv"
+    if os.path.exists(file_name):
+        df = pd.read_csv(file_name)
+    else:
+        df = pd.DataFrame(columns=['date', 'amount'])
+    
+    new_entry = pd.DataFrame({'date': [date], 'amount': [amount]})
+    df = pd.concat([df, new_entry], ignore_index=True)
+    df.to_csv(file_name, index=False)
+
 
