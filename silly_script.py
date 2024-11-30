@@ -75,7 +75,7 @@ st.title("Mystery Budget")
 # Calculate daily rate and accumulated amount for selected month
 daily_rate = calculate_daily_rate(AMOUNT, selected_month)
 accumulated = calculate_accumulated_amount(daily_rate, selected_month)
-remainder = accumulated - st.session_state.spent_money
+remainder = AMOUNT - st.session_state.spent_money
 
 # Display current budget status
 st.header("Budget Status")
@@ -89,7 +89,7 @@ with col2:
     st.metric(
         label="Remaining Budget",
         value=f"${remainder:.2f}",
-        delta=f"${remainder - AMOUNT:.2f}",
+        delta=f"${remainder:.2f}",
         delta_color="inverse"
     )
 
