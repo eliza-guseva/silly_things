@@ -113,6 +113,9 @@ if st.session_state.authenticated:
     st.header("Spending Visualization")
     df = load_spent_money(selected_month)
     if not df.empty:
+        # Convert date column to datetime
+        df['date'] = pd.to_datetime(df['date'])
+        
         # Sort by date and calculate cumulative sum
         df = df.sort_values('date')
         df['cumulative_spent'] = df['amount'].cumsum()
@@ -133,12 +136,17 @@ if st.session_state.authenticated:
             on='date', 
             how='left'
         )
+        
+        # Fill missing values and create the line chart
         plot_df = plot_df.fillna(method='ffill')
         
-        # Create the line chart
-        fig = px.line(plot_df, x='date', 
-                      y=['ideal_spending', 'cumulative_spent'],
-                      line_shape='linear')
+        fig = px.line(
+            plot_df, 
+            x='date', 
+            y=['ideal_spending', 'cumulative_spent'],
+            labels={'ideal_spending': 'Ideal Spending', 'cumulative_spent': 'Actual Spending'},
+            title='Spending Over Time'
+        )
         
         fig.update_traces(line=dict(width=4))
         st.plotly_chart(fig, use_container_width=True)
