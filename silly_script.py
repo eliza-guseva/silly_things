@@ -95,34 +95,26 @@ with col2:
     )
 
 # Input for spending money
-col1, col2 = st.columns(1)  # First row with two columns
-with col1:
-    spent = st.number_input("Enter amount spent:", min_value=0.0, value=0.0, step=0.1)
-with col2:
-    # Get the first and last day of current month
-    today = datetime.date.today()
-    first_day = today.replace(day=1)
-    last_day = today.replace(day=calendar.monthrange(today.year, today.month)[1])
-    
-    expense_date = st.date_input(
-        "Date:",
-        value=today,
-        min_value=first_day,
-        max_value=last_day
-    )
+spent = st.number_input("Enter amount spent:", min_value=0.0, value=0.0, step=0.1)
 
-# Second row with button and secret code
-button_col, code_col = st.columns([1, 1])  # Equal width columns
-with code_col:
-    entered_code = st.text_input("Secret Code:", type="password")
-with button_col:
-    if st.button("Record Expense"):
-        if entered_code == SECRET_CODE:
-            st.session_state.spent_money += spent
-            save_expense(spent, expense_date)
-            st.rerun()
-        else:
-            st.error("Invalid secret code")
+# Date input
+expense_date = st.date_input(
+    "Date:",
+    value=today,
+    min_value=first_day,
+    max_value=last_day
+)
+
+# Secret code and button
+entered_code = st.text_input("Secret Code:", type="password")
+
+if st.button("Record Expense"):
+    if entered_code == SECRET_CODE:
+        st.session_state.spent_money += spent
+        save_expense(spent, expense_date)
+        st.rerun()
+    else:
+        st.error("Invalid secret code")
 
 # Add spending visualization
 st.header("Spending Visualization")
