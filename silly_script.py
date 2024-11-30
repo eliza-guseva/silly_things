@@ -4,9 +4,12 @@ import calendar
 import os
 import pandas as pd
 import plotly.express as px
+from dotenv import load_dotenv
 
-# Monthly food budget
-AMOUNT = 600
+# This will load from .env locally and from Streamlit secrets in production
+load_dotenv()
+
+AMOUNT = float(os.getenv('AMOUNT', 1000))
 
 def calculate_daily_rate(amount: float, selected_date=None) -> float:
     """Calculate how much money is allocated per day"""
