@@ -95,7 +95,7 @@ with col2:
     )
 
 # Input for spending money
-col1, col2 = st.columns(2)  # First row with two columns
+col1, col2 = st.columns(1)  # First row with two columns
 with col1:
     spent = st.number_input("Enter amount spent:", min_value=0.0, value=0.0, step=0.1)
 with col2:
