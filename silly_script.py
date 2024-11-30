@@ -94,6 +94,10 @@ with col2:
         delta_color="inverse"
     )
 
+# Calculate first and last day of selected month
+first_day = selected_month.replace(day=1)
+last_day = selected_month.replace(day=calendar.monthrange(selected_month.year, selected_month.month)[1])
+
 # Input for spending money
 spent = st.number_input("Enter amount spent:", min_value=0.0, value=0.0, step=0.1)
 
