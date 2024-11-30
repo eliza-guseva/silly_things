@@ -41,6 +41,10 @@ if st.session_state.authenticated:
     )
     selected_month = selected_month.replace(day=1)
 
+    # Calculate daily rate for the selected month
+    days_in_month = calendar.monthrange(selected_month.year, selected_month.month)[1]
+    daily_rate = AMOUNT / days_in_month
+
     # Initialize session state for spent money from file
     if 'spent_money' not in st.session_state or 'current_month' not in st.session_state or st.session_state.current_month != selected_month:
         df = load_spent_money(selected_month)
